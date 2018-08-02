@@ -1,3 +1,30 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-echo $(curl -s https://api.github.com/repos/ponylang/ponyc/releases | sed -n 's/.*"tag_name": "\(.*\)",/\1/p' | sed 'y/v/ /' | sort -t. -n -k2,3)
+set \
+  -o nounset \
+  -o pipefail \
+  -o errexit
+
+# Repository URL
+readonly repo="https://github.com/ponylang/ponyc"
+
+readonly VERSION_REGEX='([0-9]*)\.(.*)'
+
+get_git_tags () {
+  local -r repo_url="$1"
+
+  local tag
+  for tag in $(git ls-remote --tags "${repo_url}"); do
+    if [[ ${tag} =~ refs/tags/${VERSION_REGEX}$ ]]; then
+      echo "${BASH_REMATCH[1]}.${BASH_REMATCH[2]}"
+    fi
+  done \
+      | LC_ALL=C sort -t '.' -k 1,1n -k 2,2n -k 3,3n -k 4,4d -k 5,5d \
+      | tr '\n' ' '
+}
+
+list_all () {
+  echo "$(get_git_tags "${repo}")"
+}
+
+list_all
