@@ -23,9 +23,8 @@ install_ponyc(){
         tar zxf $source_path -C $install_path --strip-components=1 || exit 1
         cd $install_path
         make clean
-        make ponyc default_pic=true lto=yes
         mkdir bin
-        mv build/release/ponyc bin
+        PONY_BUILD_DIR=bin/ make ponyc default_pic=true lto=yes
 
         if [ $? -ne 0 ]; then
             rm -rf $install_path
