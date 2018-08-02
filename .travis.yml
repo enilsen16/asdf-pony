@@ -1,0 +1,8 @@
+language: pony
+script: asdf plugin-test pony https://github.com/enilsen16/asdf-pony.git 'ponyc --version'
+before_script:
+  - git clone https://github.com/asdf-vm/asdf.git asdf
+  - . asdf/asdf.sh
+os:
+  - linux
+  - osx
