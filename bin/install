@@ -19,7 +19,6 @@ install_ponyc(){
     # running this in a subshell
     # we don't want to disturb current working dir
     (
-    #   if [ "$install_type" != "version" ]; then
         tar zxf $source_path -C $install_path --strip-components=1 || exit 1
         cd $install_path
         make clean
@@ -30,10 +29,9 @@ install_ponyc(){
             rm -rf $install_path
             exit 1
         fi
-    #   else
-    #      tar zxf $source_path -C $install_path --strip-components=1 || exit 1
-    #    fi
     )
+
+    rm -rf $tmp_download_dir
 }
 
 download_source_file() {
