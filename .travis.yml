@@ -3,6 +3,14 @@ script: asdf plugin-test pony https://github.com/enilsen16/asdf-pony.git 'ponyc 
 before_script:
   - git clone https://github.com/asdf-vm/asdf.git asdf
   - . asdf/asdf.sh
-os:
-  - linux
-  - osx
+
+matrix:
+  include:
+    - os: linux
+      env:
+        - RELEASE_CONFIG=yes
+        - LLVM_VERSION="3.9.1"
+        - LLVM_CONFIG="llvm-config-3.9"
+        - config=release
+
+    - os: osx
