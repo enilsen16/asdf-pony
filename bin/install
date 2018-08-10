@@ -24,7 +24,7 @@ install_ponyc(){
         cd $install_path
         make clean
         mkdir bin
-        PONY_BUILD_DIR=bin/ make ponyc default_pic=true lto=yes
+        PONY_BUILD_DIR=bin/ make default_pic=true lto=yes
 
         if [ $? -ne 0 ]; then
             rm -rf $install_path
