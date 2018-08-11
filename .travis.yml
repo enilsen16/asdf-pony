@@ -1,12 +1,19 @@
 language: pony
 script: asdf plugin-test pony https://github.com/enilsen16/asdf-pony.git 'ponyc --version'
 before_script:
+  - "bash .travis-install.bash"
   - git clone https://github.com/asdf-vm/asdf.git asdf
   - . asdf/asdf.sh
 
 matrix:
   include:
     - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
       env:
         - RELEASE_CONFIG=yes
         - LLVM_VERSION="3.9.1"
